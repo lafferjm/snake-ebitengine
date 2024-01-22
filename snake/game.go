@@ -2,8 +2,6 @@ package snake
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/vector"
-	"image/color"
 )
 
 const (
@@ -11,42 +9,31 @@ const (
 	ScreenHeight = 600
 )
 
+type Vec2 struct {
+	x int
+	y int
+}
+
 type Game struct {
-	x float32
-	y float32
+	snake *Snake
 }
 
 func NewGame() (*Game, error) {
 	g := &Game{
-		x: ScreenWidth / 2,
-		y: ScreenHeight / 2,
+		snake: NewSnake(),
 	}
 
 	return g, nil
 }
 
 func (g *Game) Update() error {
-	if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
-		g.x -= 1
-	}
-
-	if ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
-		g.x += 1
-	}
-
-	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) {
-		g.y -= 1
-	}
-
-	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) {
-		g.y += 1
-	}
+	g.snake.Update()
 
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	vector.DrawFilledRect(screen, g.x, g.y, 20, 20, color.RGBA{G: 0xFF, A: 0xFF}, true)
+	g.snake.Draw(screen)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {

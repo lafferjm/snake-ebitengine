@@ -14,7 +14,7 @@ func main() {
 	}
 
 	ebiten.SetWindowSize(snake.ScreenWidth, snake.ScreenHeight)
-	ebiten.SetWindowTitle("Hello, World!")
+	ebiten.SetWindowTitle("Snake")
 	ebiten.SetTPS(30)
 
 	if err := ebiten.RunGame(game); err != nil {
