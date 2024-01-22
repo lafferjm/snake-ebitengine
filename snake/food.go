@@ -20,14 +20,12 @@ func NewFood() *Food {
 	}
 }
 
-func (f *Food) Update(shouldRespawn bool) {
-	if shouldRespawn {
-		var newX = rand.Intn(ScreenWidth/20-20) * 20
-		var newY = rand.Intn(ScreenHeight/20-20) * 20
-		f.position = Vec2{
-			x: newX,
-			y: newY,
-		}
+func (f *Food) Update() {
+	var newX = rand.Intn(ScreenWidth/20-20) * 20
+	var newY = rand.Intn(ScreenHeight/20-20) * 20
+	f.position = Vec2{
+		x: newX,
+		y: newY,
 	}
 }
 

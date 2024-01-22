@@ -76,3 +76,7 @@ func (s *Snake) Draw(screen *ebiten.Image) {
 			20, 20, color.RGBA{G: 0xFF, A: 0xFF}, true)
 	}
 }
+
+func (s *Snake) Grow() {
+	s.segments = append(s.segments, s.segments[len(s.segments)-1])
+}

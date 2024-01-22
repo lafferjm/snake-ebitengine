@@ -38,7 +38,10 @@ func (g *Game) CheckCollision() bool {
 func (g *Game) Update() error {
 	g.snake.Update()
 
-	g.food.Update(g.CheckCollision())
+	if g.CheckCollision() {
+		g.food.Update()
+		g.snake.Grow()
+	}
 
 	return nil
 }
