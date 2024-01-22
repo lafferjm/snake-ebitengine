@@ -28,8 +28,17 @@ func NewGame() (*Game, error) {
 	return g, nil
 }
 
+func (g *Game) CheckCollision() bool {
+	snakeHead := g.snake.Head()
+	foodPosition := g.food.position
+
+	return snakeHead.x == foodPosition.x && snakeHead.y == foodPosition.y
+}
+
 func (g *Game) Update() error {
 	g.snake.Update()
+
+	g.food.Update(g.CheckCollision())
 
 	return nil
 }
