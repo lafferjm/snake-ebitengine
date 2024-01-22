@@ -16,11 +16,13 @@ type Vec2 struct {
 
 type Game struct {
 	snake *Snake
+	food  *Food
 }
 
 func NewGame() (*Game, error) {
 	g := &Game{
 		snake: NewSnake(),
+		food:  NewFood(),
 	}
 
 	return g, nil
@@ -33,6 +35,7 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
+	g.food.Draw(screen)
 	g.snake.Draw(screen)
 }
 
