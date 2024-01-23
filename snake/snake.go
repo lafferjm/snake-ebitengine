@@ -80,3 +80,23 @@ func (s *Snake) Draw(screen *ebiten.Image) {
 func (s *Snake) Grow() {
 	s.segments = append(s.segments, s.segments[len(s.segments)-1])
 }
+
+func (s *Snake) IsOffScreen() bool {
+	snakeHead := s.Head()
+	return snakeHead.x > ScreenWidth-20 || snakeHead.x < 0 || snakeHead.y > ScreenHeight-20 || snakeHead.y < 0
+}
+
+func (s *Snake) DidIntersectSelf() bool {
+	snakeHead := s.Head()
+	for i := 1; i < len(s.segments); i++ {
+		if snakeHead == s.segments[i] {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (s *Snake) Stop() {
+	s.direction = STOPPED
+}

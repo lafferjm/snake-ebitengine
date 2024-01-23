@@ -35,12 +35,20 @@ func (g *Game) CheckCollision() bool {
 	return snakeHead.x == foodPosition.x && snakeHead.y == foodPosition.y
 }
 
+func (g *Game) CheckGameOver() bool {
+	return g.snake.IsOffScreen() || g.snake.DidIntersectSelf()
+}
+
 func (g *Game) Update() error {
 	g.snake.Update()
 
 	if g.CheckCollision() {
 		g.food.Update()
 		g.snake.Grow()
+	}
+
+	if g.CheckGameOver() {
+		g.snake.Stop()
 	}
 
 	return nil
@@ -51,6 +59,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	g.snake.Draw(screen)
 }
 
-func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
+func (g *Game) Layout(_, _ int) (screenWidth, screenHeight int) {
 	return ScreenWidth, ScreenHeight
 }
