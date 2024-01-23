@@ -3,7 +3,7 @@ package snake
 type State int
 
 const (
-	MainScreen State = iota
+	MainMenu State = iota
 	Playing
 	GameOver
 )
@@ -14,7 +14,7 @@ type GameState struct {
 
 func NewGameState() *GameState {
 	return &GameState{
-		state: Playing,
+		state: MainMenu,
 	}
 }
 

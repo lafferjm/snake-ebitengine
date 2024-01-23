@@ -30,7 +30,7 @@ func NewSnake() *Snake {
 
 	snake := &Snake{
 		segments:  initialSegments,
-		direction: STOPPED,
+		direction: UP,
 	}
 
 	return snake
