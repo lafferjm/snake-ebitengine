@@ -15,18 +15,20 @@ type Vec2 struct {
 }
 
 type Game struct {
-	snake *Snake
-	food  *Food
-	hud   *HUD
-	score int
+	snake     *Snake
+	food      *Food
+	hud       *HUD
+	gameState *GameState
+	score     int
 }
 
 func NewGame() (*Game, error) {
 	g := &Game{
-		snake: NewSnake(),
-		food:  NewFood(),
-		hud:   NewHud(),
-		score: 0,
+		snake:     NewSnake(),
+		food:      NewFood(),
+		hud:       NewHud(),
+		gameState: NewGameState(),
+		score:     0,
 	}
 
 	return g, nil
@@ -44,19 +46,21 @@ func (g *Game) CheckGameOver() bool {
 }
 
 func (g *Game) Update() error {
-	g.snake.Update()
+	if g.gameState.PollState(Playing) {
+		g.snake.Update()
 
-	if g.CheckCollision() {
-		g.food.Update()
-		g.snake.Grow()
-		g.score += 1
-		g.hud.UpdateScoreText(g.score)
+		if g.CheckCollision() {
+			g.food.Update()
+			g.snake.Grow()
+			g.score += 1
+			g.hud.UpdateScoreText(g.score)
+		}
+
+		if g.CheckGameOver() {
+			g.snake.Stop()
+			g.gameState.SetState(GameOver)
+		}
 	}
-
-	if g.CheckGameOver() {
-		g.snake.Stop()
-	}
-
 	return nil
 }
 
